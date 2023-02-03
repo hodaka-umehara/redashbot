@@ -8,11 +8,13 @@ type Hosts = {
 export type Config = {
   port: number
   token: string
+  appToken: string
   signingSecret: string
   hosts: Hosts
   browser: Engine
   sleep: number
   browserTimeout: number
+  socketMode: boolean
 }
 
 let hosts: Hosts
@@ -48,6 +50,7 @@ if (process.env.REDASH_HOST) {
 
 export const config: Config = {
   token: process.env.SLACK_BOT_TOKEN!,
+  appToken: process.env.SLACK_APP_TOKEN!,
   signingSecret: process.env.SLACK_SIGNING_SECRET!,
   port: process.env.PORT ? parseInt(process.env.PORT) : 3000,
   browser: (process.env.BROWSER || 'chromium') as Engine,
@@ -58,4 +61,5 @@ export const config: Config = {
     ? parseFloat(process.env.SLEEP_TIME)
     : 10000,
   hosts,
+  socketMode: true
 }
